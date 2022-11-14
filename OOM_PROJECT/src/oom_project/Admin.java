@@ -139,7 +139,7 @@ class PaperSet implements ActionListener{
                 String t3=o2.getText();
                 String t4=o3.getText();
                 String t5=o4.getText();
-                String t6=o4.getText();
+                String t6=a.getText();//CHANGED FROM O4 TO a
                 Question t=new Question(t1,t2,t3,t4,t5,t6);
                 qpaper.add(t);
                 pap.dispose();
@@ -151,7 +151,7 @@ class PaperSet implements ActionListener{
                 String t3=o2.getText();
                 String t4=o3.getText();
                 String t5=o4.getText();
-                String t6=o4.getText();
+                String t6=a.getText();//CHANGED FROM o4 TO a
                 Question t=new Question(t1,t2,t3,t4,t5,t6);
                 qpaper.add(t);
                 pap.dispose();
