@@ -7,47 +7,73 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Admin {
     public Admin(){
-        Adlog a2= new Adlog();
+        Adminlogin a2= new Adminlogin();
     }    
     public static void main(String args[]){
     }
 }
 
-class Adlog implements ActionListener{
+class Adminlogin implements ActionListener{
     JButton b = new JButton("Login");
     myFrame ad= new myFrame("Login","pencil.png");
-    public Adlog(){
+    static HashMap<String,String> allowedAdmin=new HashMap<>();
+    boolean authenticate;
+    JTextField id;
+    JPasswordField apwd;
+    public Adminlogin(){
         JLabel idEnter= new JLabel("Enter the ID:");
         ad.setLayout(null);
         idEnter.setForeground(Color.white);
         idEnter.setFont(new Font("Sans Serif",Font.BOLD,20));
         ad.add(idEnter);
-        JTextField id= new JTextField();
+        id= new JTextField();
         ad.add(id);
         JLabel passwordEnter= new JLabel("Enter the password: ");
         passwordEnter.setForeground(Color.white);
         passwordEnter.setFont(new Font("Sans Serif",Font.BOLD,20));
         ad.add(passwordEnter);
-        JPasswordField apwd= new JPasswordField();
+        apwd= new JPasswordField();
         ad.add(apwd);
         ad.add(b);
         b.setBounds(600,400,100,50);
+        b.setFocusable(false);
         idEnter.setBounds(300,100,250,25);
         id.setBounds(600,100,200,25);
         passwordEnter.setBounds(300,200,200,25);
         apwd.setBounds(600,200,200,25);
-        b.setFocusable(false);
+        
         b.addActionListener(this);
     } 
+    
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==b){
-            ad.dispose();
-            Next n1= new Next();
+            String pwd=String.valueOf(apwd.getPassword());
+            authenticate=authorizationAdmin(id.getText(),pwd);
+            if(authenticate){
+                ad.dispose();
+                Next n1= new Next();
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Your ID or password is Incorrect. Try Again!","Error",JOptionPane.ERROR_MESSAGE);
+            }
+            
         }
     }
+    boolean authorizationAdmin(String a,String b){
+        allowedAdmin.put("2021031","p@1");
+        allowedAdmin.put("2021052","tt21");
+        allowedAdmin.put("2021061","oy5^");
+        for(HashMap.Entry<String,String> check : allowedAdmin.entrySet()){ 
+            if((a.equals(check.getKey()))&&(b.equals(check.getValue()))){
+                return true;
+            }    
+        }
+        return false;           
+    }    
 }
 
 class Next implements ActionListener{
@@ -64,13 +90,18 @@ class Next implements ActionListener{
         rinfo.setBounds(650,300,300,50);
         rinfo.setFocusable(false);
         setp.addActionListener(this);
+        rinfo.addActionListener(this);
     } 
     
     public void actionPerformed( ActionEvent e){
         if(e.getSource()==setp){
             nt.dispose();
             PaperSet p1=new PaperSet();
-        }    
+        }
+        else if(e.getSource()==rinfo){
+            nt.dispose();
+            Register r3=new Register();
+        }   
     }
 }    
 
@@ -139,8 +170,9 @@ class PaperSet implements ActionListener{
                 String t3=o2.getText();
                 String t4=o3.getText();
                 String t5=o4.getText();
-                String t6=a.getText();//CHANGED FROM O4 TO a
-                Question t=new Question(t1,t2,t3,t4,t5,t6);
+                String t6=a.getText();
+                int y=Integer.parseInt(t6);
+                Question t=new Question(t1,t2,t3,t4,t5,y);
                 qpaper.add(t);
                 pap.dispose();
                 PaperSet w=new PaperSet();
@@ -151,11 +183,59 @@ class PaperSet implements ActionListener{
                 String t3=o2.getText();
                 String t4=o3.getText();
                 String t5=o4.getText();
-                String t6=a.getText();//CHANGED FROM o4 TO a
-                Question t=new Question(t1,t2,t3,t4,t5,t6);
+                String t6=a.getText();
+                int y=Integer.parseInt(t6);
+                Question t=new Question(t1,t2,t3,t4,t5,y);
                 qpaper.add(t);
                 pap.dispose();
-                Questiondisplay qwq=new Questiondisplay(qpaper.get(0));
+                User qwq=new User();
+            }
+        }    
+    }
+}
+
+class Register implements ActionListener{
+    static HashMap<String,String> RegisteredStudents=new HashMap<>();
+    static int studentcount=0;
+    myFrame r;
+    JTextField rollt;
+    JTextField pt;
+    JButton enter;
+    public Register(){
+        r=new myFrame("Registering","pencil.png");
+        r.setLayout(new GridLayout(3,2));
+        JPanel submitd=new JPanel();
+        submitd.setBackground(new Color(0x123456));
+        enter=new JButton("Enroll");
+        submitd.add(enter);
+        JLabel roll=new JLabel("Enter student "+(studentcount+1)+" roll number: ");
+        roll.setForeground(Color.white);
+        roll.setFont(new Font("Sans Serif",Font.BOLD,20));
+        JLabel p=new JLabel("Enter student "+(studentcount+1)+" password: ");
+        p.setForeground(Color.white);
+        p.setFont(new Font("Sans Serif",Font.BOLD,20));
+        rollt=new JTextField();
+        pt=new JTextField();
+        r.add(roll);
+        r.add(rollt);
+        r.add(p);
+        r.add(pt);
+        r.add(submitd);
+        studentcount++;
+        enter.addActionListener(this);
+    }
+    
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==enter){
+            RegisteredStudents.put(rollt.getText(),pt.getText());
+            if(studentcount>=3){
+                JOptionPane.showMessageDialog(null,"Exactly 3 students have to be enrolled. Thank You!","Message",JOptionPane.INFORMATION_MESSAGE);
+                r.dispose();
+                User u3=new User();
+            }
+            else{
+                r.dispose();
+                Register r2= new Register();
             }
         }    
     }

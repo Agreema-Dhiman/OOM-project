@@ -25,11 +25,11 @@ public class Result {
 }
 
 class Marks{
-    static int m;
+    static int ma;
     public Marks(){
         myFrame t=new myFrame("Result","Pencil.png");
         t.setLayout(new FlowLayout());
-        String p=Integer.toString(m);
+        String p=Integer.toString(ma);
         JLabel mark=new JLabel(p);
         mark.setForeground(Color.white);
         mark.setFont(new Font("Sans Serif",Font.BOLD,20));

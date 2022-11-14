@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 /**
  *
  * @author 91807
@@ -25,7 +26,8 @@ public class Student {
 
 class Loginpage implements ActionListener{
     JButton button = new JButton("Login");
-    
+    JTextField username;
+    JPasswordField pwd;
     myFrame login= new myFrame("Login","pencil.png");
     public Loginpage(){
         JLabel usernameEnter= new JLabel("Enter the roll number:");
@@ -33,13 +35,13 @@ class Loginpage implements ActionListener{
         usernameEnter.setForeground(Color.white);
         usernameEnter.setFont(new Font("Sans Serif",Font.BOLD,20));
         login.add(usernameEnter);
-        JTextField username= new JTextField();
+        username= new JTextField();
         login.add(username);
         JLabel passwordEnter= new JLabel("Enter the password: ");
         passwordEnter.setForeground(Color.white);
         passwordEnter.setFont(new Font("Sans Serif",Font.BOLD,20));
         login.add(passwordEnter);
-        JPasswordField pwd= new JPasswordField();
+        pwd= new JPasswordField();
         login.add(pwd);
         login.add(button);
         button.setBounds(600,400,100,50);
@@ -49,13 +51,29 @@ class Loginpage implements ActionListener{
         pwd.setBounds(600,200,200,25);
         button.setFocusable(false);
         button.addActionListener(this);
-        
-    } 
+    }
+    
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==button){
-            login.dispose();
-            Questiondisplay qw= new Questiondisplay(PaperSet.qpaper.get(0));
+            String p=String.valueOf(pwd.getPassword());
+            boolean verify=authenticate(username.getText(),p);
+            if(verify){
+                login.dispose();
+                Questiondisplay qw= new Questiondisplay(PaperSet.qpaper.get(0));
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Your Roll Number or password is Incorrect. Try Again!","Error",JOptionPane.ERROR_MESSAGE);
+            }
         }
+    }
+    
+    boolean authenticate(String a,String b){
+        for(HashMap.Entry<String,String> ver : Register.RegisteredStudents.entrySet()){ 
+            if((a.equals(ver.getKey()))&&(b.equals(ver.getValue()))){
+                return true;
+            }    
+        }
+        return false;
     }
 }
 

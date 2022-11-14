@@ -2,7 +2,7 @@ package oom_project;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener; //yo wassup
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class Login{
@@ -18,6 +18,7 @@ class User implements ActionListener{
     public User(){
         u1.add(adminuser);
         u1.add(stuser);
+        u1.setLayout(null);
         stuser.setBounds(650,300,200,50);
         stuser.setFocusable(false);
         adminuser.addActionListener(this);
