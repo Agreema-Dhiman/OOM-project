@@ -134,7 +134,6 @@ class Questiondisplay implements ActionListener{
         }
                        
         if(e.getSource()==nextq){
-            
             if(quesno<10){
                 questions.dispose();
                 Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(quesno),quesno+1);
@@ -148,7 +147,7 @@ class Questiondisplay implements ActionListener{
             panelb[quesno-1].setEnabled(false);
             if(an==sel){
                 Response m= new Response(quesno,Integer.toString(sel),Integer.toString(an),"correct");
-                Marks.res.put(quesno,m);
+                Answers.res.put(quesno,m);
                 if((quesno>=1)&&(quesno<=5)){
                     Marks.ma=Marks.ma+5;
                 }
@@ -159,8 +158,10 @@ class Questiondisplay implements ActionListener{
                     Marks.ma=Marks.ma+15;
                 }
             }
-            Response v= new Response(quesno,Integer.toString(sel),Integer.toString(an),"incorrect");
-            Marks.res.put(quesno,v);
+            else{
+                Response v= new Response(quesno,Integer.toString(sel),Integer.toString(an),"incorrect");
+                Answers.res.put(quesno,v);
+            }    
             if(quesno<10){
                 
                 questions.dispose();
@@ -206,4 +207,20 @@ class Question{
         opt4=e;
         ans=f;
     }    
+}
+
+class Response{
+    
+    int quest;
+    String selected;
+    String correct;
+    String state;
+    public Response(int q,String s,String c,String st){
+        quest=q;
+        selected=s;
+        correct=c;
+        state=st;
+    }
+    
+        
 }

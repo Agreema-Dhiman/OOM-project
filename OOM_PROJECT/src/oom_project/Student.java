@@ -91,7 +91,7 @@ class Instructions implements ActionListener{
         JLabel ins3=new JLabel("You can submit your answer by clicking on Submit Question.");
         JLabel ins4=new JLabel("To review a question later, click on Bookmark Question.");
         JLabel ins5=new JLabel("To exit the exam, click on Submit Exam.");
-        JLabel ins6=new JLabel("The testb will begin as you click on Proceed. All the best!");
+        JLabel ins6=new JLabel("The test will begin as you click on Proceed. All the best!");
         ins1.setForeground(Color.white);
         ins1.setFont(new Font("Sans Serif",Font.BOLD,20));
         ins2.setForeground(Color.white);
@@ -113,6 +113,12 @@ class Instructions implements ActionListener{
         iframe.add(p2);
         Answers a1=new Answers();
         proceed.addActionListener(this);
+        for(int p=0;p<10;p++){
+            int a=PaperSet.qpaper.get(p).ans;
+            Response m= new Response(p+1,"none",Integer.toString(a),"not attempted");
+            Answers.res.put(p+1,m);
+        }
+            
     }
     
     public void actionPerformed(ActionEvent e){
@@ -124,6 +130,7 @@ class Instructions implements ActionListener{
 }
 
 class Answers{
+    static HashMap<Integer,Response> res=new HashMap<>();
     static HashMap<Integer,Integer> sa;
     public Answers(){
         sa=new HashMap<>();
