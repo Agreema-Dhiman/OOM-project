@@ -91,6 +91,12 @@ class Next implements ActionListener{
         rinfo.setFocusable(false);
         setp.addActionListener(this);
         rinfo.addActionListener(this);
+        if(User.first){
+            setp.setEnabled(false);
+        }
+        if(User.second){
+            rinfo.setEnabled(false);
+        }
     } 
     
     public void actionPerformed( ActionEvent e){
@@ -164,30 +170,25 @@ class PaperSet implements ActionListener{
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==sub){
-            if(count<2){
-                String t1=q.getText();
-                String t2=o1.getText();
-                String t3=o2.getText();
-                String t4=o3.getText();
-                String t5=o4.getText();
-                String t6=a.getText();
-                int y=Integer.parseInt(t6);
-                Question t=new Question(t1,t2,t3,t4,t5,y);
-                qpaper.add(t);
-                pap.dispose();
-                PaperSet w=new PaperSet();
+            String t1=q.getText();
+            String t2=o1.getText();
+            String t3=o2.getText();
+            String t4=o3.getText();
+            String t5=o4.getText();
+            String t6=a.getText();
+            int y=Integer.parseInt(t6);
+            Question t=new Question(t1,t2,t3,t4,t5,y);
+            qpaper.add(t);
+            
+            if(count<10){
+               
+               pap.dispose();
+               PaperSet w=new PaperSet();
             }
             else{
-                String t1=q.getText();
-                String t2=o1.getText();
-                String t3=o2.getText();
-                String t4=o3.getText();
-                String t5=o4.getText();
-                String t6=a.getText();
-                int y=Integer.parseInt(t6);
-                Question t=new Question(t1,t2,t3,t4,t5,y);
-                qpaper.add(t);
+                JOptionPane.showMessageDialog(null,"Exactly 10 questions have to be set. Thank You!","Message",JOptionPane.INFORMATION_MESSAGE);
                 pap.dispose();
+                User.first=true;
                 User qwq=new User();
             }
         }    
@@ -231,6 +232,7 @@ class Register implements ActionListener{
             if(studentcount>=3){
                 JOptionPane.showMessageDialog(null,"Exactly 3 students have to be enrolled. Thank You!","Message",JOptionPane.INFORMATION_MESSAGE);
                 r.dispose();
+                User.second=true;
                 User u3=new User();
             }
             else{

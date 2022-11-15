@@ -10,15 +10,14 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.awt.*;
 /**
  *
  * @author 91807
  */
 public class Student {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         
     }
@@ -59,7 +58,7 @@ class Loginpage implements ActionListener{
             boolean verify=authenticate(username.getText(),p);
             if(verify){
                 login.dispose();
-                Questiondisplay qw= new Questiondisplay(PaperSet.qpaper.get(0));
+                Instructions i1=new Instructions();
             }
             else{
                 JOptionPane.showMessageDialog(null,"Your Roll Number or password is Incorrect. Try Again!","Error",JOptionPane.ERROR_MESSAGE);
@@ -77,3 +76,59 @@ class Loginpage implements ActionListener{
     }
 }
 
+class Instructions implements ActionListener{
+    JButton proceed;
+    myFrame iframe;
+    public Instructions(){
+        proceed=new JButton("Proceed");
+        iframe=new myFrame("Instructions","pencil.png");
+        iframe.setLayout(new GridLayout(7,1));
+        JPanel p2=new JPanel();
+        p2.add(proceed);
+        p2.setBackground(new Color(0x123456));
+        JLabel ins1=new JLabel("You have 5 good(Q1-5), 3 tough(Q6-8) and 2 complex questions(Q9-10) for your exam.");
+        JLabel ins2=new JLabel("Each good question carries 5 marks, Each tough question carries 10 marks and Each complex question carries 15 marks.");
+        JLabel ins3=new JLabel("You can submit your answer by clicking on Submit Question.");
+        JLabel ins4=new JLabel("To review a question later, click on Bookmark Question.");
+        JLabel ins5=new JLabel("To exit the exam, click on Submit Exam.");
+        JLabel ins6=new JLabel("The testb will begin as you click on Proceed. All the best!");
+        ins1.setForeground(Color.white);
+        ins1.setFont(new Font("Sans Serif",Font.BOLD,20));
+        ins2.setForeground(Color.white);
+        ins2.setFont(new Font("Sans Serif",Font.BOLD,20));
+        ins3.setForeground(Color.white);
+        ins3.setFont(new Font("Sans Serif",Font.BOLD,20));
+        ins4.setForeground(Color.white);
+        ins4.setFont(new Font("Sans Serif",Font.BOLD,20));
+        ins5.setForeground(Color.white);
+        ins5.setFont(new Font("Sans Serif",Font.BOLD,20));
+        ins6.setForeground(Color.white);
+        ins6.setFont(new Font("Sans Serif",Font.BOLD,20));
+        iframe.add(ins1);
+        iframe.add(ins2);
+        iframe.add(ins3);
+        iframe.add(ins4);
+        iframe.add(ins5);
+        iframe.add(ins6);
+        iframe.add(p2);
+        Answers a1=new Answers();
+        proceed.addActionListener(this);
+    }
+    
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==proceed){
+            iframe.dispose();
+            Questiondisplay qw= new Questiondisplay(PaperSet.qpaper.get(0),1);
+        }
+    }    
+}
+
+class Answers{
+    static HashMap<Integer,Integer> sa;
+    public Answers(){
+        sa=new HashMap<>();
+        for(int i=0;i<10;i++){
+            sa.put(i,0);
+        }
+    }
+}

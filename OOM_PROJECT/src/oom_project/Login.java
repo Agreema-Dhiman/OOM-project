@@ -15,6 +15,8 @@ class User implements ActionListener{
     JButton adminuser= new JButton("Admin Login");
     JButton stuser= new JButton("Student Login");
     myFrame u1= new myFrame("User","pencil.png");
+    static boolean first=false;
+    static boolean second=false;
     public User(){
         u1.add(adminuser);
         u1.add(stuser);
@@ -25,6 +27,11 @@ class User implements ActionListener{
         stuser.addActionListener(this);
         adminuser.setBounds(400,300,200,50);
         adminuser.setFocusable(false);
+        stuser.setEnabled(false);
+        if((first==true)&&(second==true)){
+            stuser.setEnabled(true);
+            adminuser.setEnabled(false);
+        }
     }   
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==stuser){

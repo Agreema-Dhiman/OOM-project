@@ -13,44 +13,61 @@ public class Exam {
 }
 
 class Questiondisplay implements ActionListener{
+    static int quesno;
     myFrame questions= new myFrame("Questions","pencil.png");
     JButton nextq;
     JButton sube;
     JButton subq;
+    JButton bookq;
+    JButton panelb[];
     JRadioButton option1;
     JRadioButton option2;
     JRadioButton option3;
     JRadioButton option4;
-    static int c=0;
     int an;
     int sel;
-    public Questiondisplay(Question s){
+    public Questiondisplay(Question s,int qn){
+        quesno=qn;
         questions.setBackground(Color.blue);
         JPanel qpanel= new JPanel();
+        panelb= new JButton[10];
+        for(int i=0;i<10;i++){
+            String p=Integer.toString(i+1);
+            panelb[i]=new JButton(p);
+            panelb[i].setFocusable(false);
+            panelb[i].addActionListener(this);
+            if(Answers.sa.get(i)==0){
+                panelb[i].setBackground(Color.green);
+            }
+            else if(Answers.sa.get(i)==1){
+                panelb[i].setEnabled(false);
+                panelb[i].setBackground(Color.gray);
+            }
+            else if(Answers.sa.get(i)==2){
+                panelb[i].setBackground(Color.blue);
+            }
+        }
         qpanel.setBackground(Color.cyan);
         JLabel q= new JLabel("               Question Numbers               ");
-        JButton q1=new JButton("1");
-        JButton q2=new JButton("2");
-        JButton q3=new JButton("3");
-        JButton q4=new JButton("4");
-        JButton q5=new JButton("5");
-        JButton q6=new JButton("6");
-        JButton q7=new JButton("7");
-        JButton q8=new JButton("8");
-        JButton q9=new JButton("9");
-        JButton q10=new JButton("10");
+        JLabel good=new JLabel("               Good Questions               ");
+        JLabel tough=new JLabel("              Tough Questions               ");
+        JLabel complex=new JLabel("               Complex Questions               ");
         qpanel.add(q);
-        qpanel.add(q1);
-        qpanel.add(q2);
-        qpanel.add(q3);
-        qpanel.add(q4);
-        qpanel.add(q5);
-        qpanel.add(q6);
-        qpanel.add(q7);
-        qpanel.add(q8);
-        qpanel.add(q9);
-        qpanel.add(q10);
-        JLabel qt=new JLabel(s.ques);
+        qpanel.add(good);
+        qpanel.add(panelb[0]);
+        qpanel.add(panelb[1]);
+        qpanel.add(panelb[2]);
+        qpanel.add(panelb[3]);
+        qpanel.add(panelb[4]);
+        qpanel.add(tough);
+        qpanel.add(panelb[5]);
+        qpanel.add(panelb[6]);
+        qpanel.add(panelb[7]);
+        qpanel.add(complex);
+        qpanel.add(panelb[8]);
+        qpanel.add(panelb[9]);
+
+        JLabel qt=new JLabel("Q."+qn+" "+s.ques);
         qt.setBounds(100,50,500,25);
         qt.setForeground(Color.white);
         qt.setFont(new Font("Sans Serif",Font.BOLD,20));
@@ -71,7 +88,7 @@ class Questiondisplay implements ActionListener{
         nextq=new JButton("Next question");
         subq= new JButton("Submit answer");
         sube=new JButton("Submit Exam");
-        JButton bookq= new JButton("Bookmark question");
+        bookq= new JButton("Bookmark question");
         nextq.setBounds(30,500,200,25);
         subq.setBounds(250,500,200,25);
         bookq.setBounds(470,500,200,25);
@@ -87,21 +104,22 @@ class Questiondisplay implements ActionListener{
         questions.add(qt);
         questions.add(qpanel);
         questions.setLayout(null);
-        qpanel.setBounds(1000,200,200,200);
+        qpanel.setBounds(1000,100,200,360);
         qpanel.setPreferredSize(new Dimension(200,200));
         qpanel.setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
         questions.setVisible(true);
-        c++;
         nextq.addActionListener(this);
+        bookq.addActionListener(this);
         option1.addActionListener(this);
         option2.addActionListener(this);
         option3.addActionListener(this);
         option4.addActionListener(this);
         subq.addActionListener(this);
-        
+        sube.addActionListener(this);
     }
     
     public void actionPerformed(ActionEvent e){
+        
         if(option1.isSelected()){
             sel=1;
         }
@@ -116,28 +134,58 @@ class Questiondisplay implements ActionListener{
         }
                        
         if(e.getSource()==nextq){
-            if(c<2){
+            
+            if(quesno<10){
                 questions.dispose();
-                Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(c));
+                Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(quesno),quesno+1);
             }
             else{
-                questions.dispose();
-                User p=new User();
+                JOptionPane.showMessageDialog(null,"This is the end of questions.","Message",JOptionPane.INFORMATION_MESSAGE);
             }
         }
         else if(e.getSource()==subq){
+            Answers.sa.put((quesno-1), 1);
+            panelb[quesno-1].setEnabled(false);
             if(an==sel){
-                Marks.ma=Marks.ma+1;
+                Response m= new Response(quesno,Integer.toString(sel),Integer.toString(an),"correct");
+                Marks.res.put(quesno,m);
+                if((quesno>=1)&&(quesno<=5)){
+                    Marks.ma=Marks.ma+5;
+                }
+                else if((quesno>=6)&&(quesno<=8)){
+                    Marks.ma=Marks.ma+10;
+                }
+                else if(quesno>=9){
+                    Marks.ma=Marks.ma+15;
+                }
             }
-            
-            if(c<2){
+            Response v= new Response(quesno,Integer.toString(sel),Integer.toString(an),"incorrect");
+            Marks.res.put(quesno,v);
+            if(quesno<10){
                 
                 questions.dispose();
-                Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(c));
+                Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(quesno),quesno+1);
             }
-            else{
+        }
+        else if(e.getSource()==bookq){
+            Answers.sa.put((quesno-1),2);
+            if(quesno<10){
                 questions.dispose();
-                Marks i=new Marks();
+                Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(quesno),quesno+1);
+            }    
+        }
+        else if(e.getSource()==sube){
+            questions.dispose();
+            Marks m3=new Marks();
+        } 
+        else{
+            for(int j=0;j<10;j++){
+                if(e.getSource()==panelb[j]){
+                    questions.dispose();
+                    Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(j),j+1);
+                    quesno=j+1;
+                }    
+
             }
         }    
     }
