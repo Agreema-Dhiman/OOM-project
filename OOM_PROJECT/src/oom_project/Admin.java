@@ -20,27 +20,37 @@ public class Admin {
 class Adminlogin implements ActionListener{
     JButton b = new JButton("Login");
     myFrame ad= new myFrame("Login","pencil.png");
+    
     static HashMap<String,String> allowedAdmin=new HashMap<>();
     boolean authenticate;
     JTextField id;
     JPasswordField apwd;
+    
     public Adminlogin(){
-        JLabel idEnter= new JLabel("Enter the ID:");
-        ad.setLayout(null);
-        idEnter.setForeground(Color.white);
-        idEnter.setFont(new Font("Sans Serif",Font.BOLD,20));
-        ad.add(idEnter);
+        //----------ID----------
+        JLabel idEnter= new JLabel("Enter the ID:");        
+        ad.setLayout(null); //manually change the layout of the frame
+        idEnter.setForeground(Color.white); //font color
+        idEnter.setFont(new Font("Sans Serif",Font.BOLD,20)); //font style
+        ad.add(idEnter); // frame adds label idEnter
+        
+        //textField
         id= new JTextField();
-        ad.add(id);
+        ad.add(id); //adds textfield to frame
+        
+        //---------Password---------
         JLabel passwordEnter= new JLabel("Enter the password: ");
         passwordEnter.setForeground(Color.white);
         passwordEnter.setFont(new Font("Sans Serif",Font.BOLD,20));
         ad.add(passwordEnter);
         apwd= new JPasswordField();
         ad.add(apwd);
+        
+        //add Login button
         ad.add(b);
         b.setBounds(600,400,100,50);
-        b.setFocusable(false);
+        b.setFocusable(false); //to remove the unwanted box around the texts
+        
         idEnter.setBounds(300,100,250,25);
         id.setBounds(600,100,200,25);
         passwordEnter.setBounds(300,200,200,25);
@@ -138,9 +148,12 @@ class PaperSet implements ActionListener{
         JLabel lo4= new JLabel("Enter the option 4:");
         lo4.setForeground(Color.white);
         lo4.setFont(new Font("Sans Serif",Font.BOLD,20));
+        
+        //correct option
         JLabel la= new JLabel("Enter the correct option: ");
         la.setForeground(Color.white);
         la.setFont(new Font("Sans Serif",Font.BOLD,20));
+        
         q= new JTextField();
         o1= new JTextField();
         o2=new JTextField();
@@ -164,7 +177,7 @@ class PaperSet implements ActionListener{
         JPanel submit= new JPanel();
         pap.add(submit);
         submit.setBackground(new Color(0x123456));
-        submit.add(sub);
+        submit.add(sub);  //***********
         sub.addActionListener(this);
         count++;
     }
