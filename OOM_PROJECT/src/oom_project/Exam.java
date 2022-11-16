@@ -19,24 +19,24 @@ class Questiondisplay implements ActionListener{
     JButton sube;
     JButton subq;
     JButton bookq;
-    JButton panelb[];
+    JButton panelb[];    //*****************
     JRadioButton option1;
     JRadioButton option2;
     JRadioButton option3;
     JRadioButton option4;
-    int an;
-    int sel;
+    int an;  //****
+    int sel;  //****
     public Questiondisplay(Question s,int qn){
         quesno=qn;
         questions.setBackground(Color.blue);
         JPanel qpanel= new JPanel();
-        panelb= new JButton[10];
+        panelb= new JButton[10];   
         for(int i=0;i<10;i++){
             String p=Integer.toString(i+1);
             panelb[i]=new JButton(p);
             panelb[i].setFocusable(false);
             panelb[i].addActionListener(this);
-            if(Answers.sa.get(i)==0){
+            if(Answers.sa.get(i)==0){  //*****
                 panelb[i].setBackground(Color.green);
             }
             else if(Answers.sa.get(i)==1){
@@ -76,7 +76,7 @@ class Questiondisplay implements ActionListener{
         option2= new JRadioButton(s.opt2);
         option3= new JRadioButton(s.opt3);
         option4= new JRadioButton(s.opt4);
-        an=s.ans;
+        an=s.ans;   //*********
         option1.setBounds(100,150,200,25);
         option2.setBounds(100,200,200,25);
         option3.setBounds(100,250,200,25);
@@ -135,8 +135,8 @@ class Questiondisplay implements ActionListener{
                        
         if(e.getSource()==nextq){
             if(quesno<10){
-                questions.dispose();
-                Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(quesno),quesno+1);
+                questions.dispose();           //****
+                Questiondisplay d= new Questiondisplay(PaperSet.qpaper.get(quesno),quesno+1);  //******
             }
             else{
                 JOptionPane.showMessageDialog(null,"This is the end of questions.","Message",JOptionPane.INFORMATION_MESSAGE);
