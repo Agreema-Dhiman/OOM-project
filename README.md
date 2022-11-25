@@ -1,6 +1,7 @@
 # OOM-project 2022
 **Details** 
 • The software serves the purpose of _examining the students_.
+
 • The admin has to first log in and set the question paper for the students and enter the roll numbers and passwords of the students who are allowed to write this exam.
 • The student login button is then enabled and they can proceed to attempt the questions.
 • The software provides the options to students to select the Questions with increasing complexity levels using the question panel provided on the screen. The buttons of the
