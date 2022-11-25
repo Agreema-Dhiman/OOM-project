@@ -1,5 +1,6 @@
 # OOM-project 2022
-#_Online Examination System_
+# Online Examination System
+
 **Details** 
 
 • The software serves the purpose of _examining the students_.
